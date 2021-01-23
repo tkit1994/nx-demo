@@ -26,4 +26,10 @@ jobs:
       - name: Install packages
         run: npm install
       - name: Build
-        run: npm run nx package api
+        run: |
+          npm run build wow
+          npm run build api
+          npm run nx package api
+          
+      
+        
