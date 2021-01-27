@@ -28,7 +28,7 @@ jobs:
         run: |
           npm run build wow --base-href='./'
           npm run build api
-          npm run nx api:make  
+          npm run nx make api  
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.2.2
         with:
