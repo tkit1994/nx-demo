@@ -28,16 +28,14 @@ jobs:
         run: |
           npm run build wow --base-href='./'
           npm run build api
-          npm run nx make api  
+          npm run nx make api
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.2.2
         with:
-          # Artifact name
-          name: Wow.exe
-          path: "./dist/executables/wow Setup 0.0.0.exe"
+          path: "./dist/executables/*.exe"
 
 
 
 
-      
-        
+
+
