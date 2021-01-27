@@ -9,7 +9,7 @@ function create_symblic_link(source: string, target: string): boolean {
     fs.createSymlinkSync(source, target, 'dir');
     return true;
   }
-  if (fs.lstatSync(target).isDirectory) {
+  if (fs.lstatSync(target).isDirectory && !fs.lstatSync(target).isSymbolicLink) {
     fs.moveSync(target, `${target}_bankup`, {overwrite:true});
     fs.createSymlinkSync(source, target, 'dir');
     return true;
@@ -54,6 +54,22 @@ function battlePet(wowPath: string): boolean {
   const result2 = create_symblic_link(addonPathSource, addonPathTarget);
   return result1 && result2;
 }
+function getCurrentStatus(wowPath:string):string{
+
+  const wowDir = get_wow_dir(wowPath);
+  const wtfPath = path.join(wowDir, 'WTF');
+  if (!fs.existsSync(wtfPath)) return 'error'
+  const wtf = fs.readlinkSync(wtfPath)
+  if (wtf.toLowerCase().includes('normal')) {
+    return 'normalGame'
+  } else if (wtf.toLowerCase().includes('bp')) {
+    return 'battlePet'
+  } else if (wtf.toLowerCase().includes('bg')){
+    return 'battleGround'
+  } else {
+    return 'error'
+  }
+}
 function initialize(wowPath: string) {
   const wowDir = get_wow_dir(wowPath);
   const addonPathNormal = path.join(wowDir, 'interface', 'addonsNormal');
@@ -87,5 +103,6 @@ const wow_lib = {
   normalGame,
   battlePet,
   initialize,
+  getCurrentStatus,
 };
 export default wow_lib;

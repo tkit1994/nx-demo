@@ -5,8 +5,11 @@
 
 import { app, dialog, ipcMain } from 'electron';
 import { environment } from '../../environments/environment';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import wow from '@wow/wow-lib';
+import * as Store from 'electron-store'
+import { env } from 'process';
+
+const store = new Store()
 export default class ElectronEvents {
   static bootstrapElectronEvents(): Electron.IpcMain {
     return ipcMain;
@@ -45,3 +48,17 @@ ipcMain.on('battleGround', (event, wowPath: string) => {
 ipcMain.on('battlePet', (event, wowPath: string) => {
   wow.battlePet(wowPath);
 });
+
+ipcMain.handle('set-wow-path', (event, wowPath: string) => {
+  store.set('wow-path', wowPath);
+});
+
+ipcMain.handle('get-wow-path', (event) => {
+  const wowPath = store.get('wow-path')
+  return wowPath
+});
+
+ipcMain.handle('get-current-status', (event, wowPath:string)=>{
+  const status = wow.getCurrentStatus(wowPath)
+  return status
+})
