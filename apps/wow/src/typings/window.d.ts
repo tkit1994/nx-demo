@@ -7,6 +7,8 @@ declare global {
       getFile: ()=>Promise<OpenDialogReturnValue>;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       send: (channel:string, wowPath:string)=>void;
+      getWowPath: ()=>Promise<string>,
+      setWowPath: (wowPath:string)=>Promise<void>
     };
   }
 }
