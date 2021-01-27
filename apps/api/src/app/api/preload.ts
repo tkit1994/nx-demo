@@ -8,4 +8,6 @@ contextBridge.exposeInMainWorld('electron', {
     ipcRenderer.send(channel, wowPath),
   getWowPath: () => ipcRenderer.invoke('get-wow-path'),
   setWowPath: (wowPath: string) => ipcRenderer.invoke('set-wow-path', wowPath),
+  getCurrentStatus: (wowPath: string) =>
+    ipcRenderer.invoke('get-current-status', wowPath),
 });

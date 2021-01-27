@@ -10,6 +10,7 @@
     "build": "nx build",
     "test": "nx test",
     "lint": "nx workspace-lint && nx lint",
+    "nx-electron:make": "nx build api && nx build wow --base-href='./' && nx make api",
     "e2e": "nx e2e",
     "affected:apps": "nx affected:apps",
     "affected:libs": "nx affected:libs",

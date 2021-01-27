@@ -7,6 +7,7 @@ import { app, dialog, ipcMain } from 'electron';
 import { environment } from '../../environments/environment';
 import wow from '@wow/wow-lib';
 import * as Store from 'electron-store'
+import { env } from 'process';
 
 const store = new Store()
 export default class ElectronEvents {
@@ -56,3 +57,8 @@ ipcMain.handle('get-wow-path', (event) => {
   const wowPath = store.get('wow-path')
   return wowPath
 });
+
+ipcMain.handle('get-current-status', (event, wowPath:string)=>{
+  const status = wow.getCurrentStatus(wowPath)
+  return status
+})
