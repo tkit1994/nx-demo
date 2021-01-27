@@ -6,7 +6,7 @@
 import { app, dialog, ipcMain } from 'electron';
 import { environment } from '../../environments/environment';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import wow from 'libs/wow-lib/src/lib/wow-lib';
+import wow from '@wow/wow-lib';
 export default class ElectronEvents {
   static bootstrapElectronEvents(): Electron.IpcMain {
     return ipcMain;
