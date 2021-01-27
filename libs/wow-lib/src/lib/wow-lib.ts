@@ -9,7 +9,7 @@ function create_symblic_link(source: string, target: string): boolean {
     fs.createSymlinkSync(source, target, 'dir');
     return true;
   }
-  if (fs.lstatSync(target).isDirectory) {
+  if (fs.lstatSync(target).isDirectory && !fs.lstatSync(target).isSymbolicLink) {
     fs.moveSync(target, `${target}_bankup`, {overwrite:true});
     fs.createSymlinkSync(source, target, 'dir');
     return true;
