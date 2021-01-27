@@ -1,0 +1,43 @@
+name: nodejs
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }} # runs a test on Ubuntu, Windows and macOS
+
+    strategy:
+      matrix:
+        node: [14]
+        os: [windows-latest]
+
+    steps:
+      - name: Setup repo
+        uses: actions/checkout@v2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.4
+        with:
+          node-version: ${{matrix.node}}
+      - name: Install packages
+        run: npm install
+      - name: Build
+        run: |
+          npm run build wow --base-href='./'
+          npm run build api
+          npm run nx make api  
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2.2.2
+        with:
+          # Artifact name
+          name: Wow.exe
+          path: "./dist/executables/wow Setup 0.0.0.exe"
+
+
+
+
+      
+        
