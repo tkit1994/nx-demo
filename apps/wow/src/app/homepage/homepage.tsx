@@ -10,6 +10,12 @@ export function Homepage(props: HomepageProps) {
   const [filePath, setfilePath] = useState('');
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
+    async function getWowPath() {
+      const wowPath = await window.electron.getWowPath();
+      setfilePath(wowPath)
+    }
+    getWowPath()
+
   }, []);
 
   const handleChoose = () => {
@@ -17,6 +23,7 @@ export function Homepage(props: HomepageProps) {
       const file = await window.electron.getFile();
       if (!file.canceled) {
         setfilePath(file.filePaths[0]);
+        window.electron.setWowPath(file.filePaths[0]);
       }
     }
     getFile();
